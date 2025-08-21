@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Typing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .docHeader {
+            display: flex;
+            justify-content: space-between;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+        }
+        .docHeader span {
+            font-size: 1.5em;
+        }
+        .docHeader button {
+            background-color: white;
+            color: #007bff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .docHeader button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header class="docHeader">
+        <span>Diary</span>
+        <button onclick="window.close();">Go Back</button>
+    </header>
+    <p>Error: Could not open file.</p>
+    <div id="randomParagraph"></div>
+    <script>
+        const paragraphs = [
+            "No more secrets.",
+            "Not a single sentiment of yours valid.",
+            "Confess.",
+        ];
+        // Pick a random paragraph
+        const randomIndex = Math.floor(Math.random() * paragraphs.length);
+        document.getElementById("randomParagraph").innerHTML = `<p>${paragraphs[randomIndex]}</p>`;
+    </script>
+</body>
+</html>
