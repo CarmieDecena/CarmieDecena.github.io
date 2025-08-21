@@ -46,7 +46,7 @@ for (let i = 0; i < ribbonIcons.length; i++) {
 
 // story lines the player will type, edit and put story line
 const storyLines = [
-    "My is Harvey P. Ramos, I’m a Grade 12 ICT student from Don Bosco Anselmo High School.",
+    "My name is Harvey P. Ramos, I’m a Grade 12 ICT student from Don Bosco Anselmo High School.",
     "Last November 21 we had a nature retreat at Camp Katarungan.",
     "There were lots of fun activities such as Hiking, Swimming, Camp games... and even boating.",
     "Our squad leader was a middle aged man with a background in mountain climbing.",
