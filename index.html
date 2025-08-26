@@ -131,9 +131,17 @@
             font-size: 22.4px;
         }
 
-        .closeButton {
+        .popup .closeButton {
             position: absolute;
-            right: 10px; top: 10px;
+            top: 18px;   right: 20px; 
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .webHeader .closeButton {
+            position: absolute;
+            right: 10px; 
             font-size: 24px;
             cursor: pointer;
             color: #fff;
@@ -149,9 +157,21 @@
             background: #fff;
             overflow: auto;
         }
+
+        #searchEngine {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #fff;
+            overflow: auto;
+        }
         /* Header styling */
-        .docHeader {
-            background-color: #55aaaa;
+        .webHeader {
+            background-color: #2809bc;
+            color: #fff;
             padding: 5px;
             display: flex;
             justify-content: space-between;
@@ -159,8 +179,8 @@
         }
 
         /* Ribbon container */
-        #docRibbon,
-        #docRibbonIcons {
+        #webRibbon,
+        #webRibbonIcons {
             width: 100%;
             height: 40px;
             display: flex;
@@ -168,7 +188,7 @@
             border: 2px solid #000;
         }
 
-        #docRibbonIcons {
+        #webRibbonIcons {
             border-top: none;
         }
 
@@ -256,7 +276,7 @@
 <body>
     <div id="mainBody">
         <div class="icons desktopIcons">
-            <button onclick="openDeskPopup(trash)">
+            <button onclick="openTrashBin(trash)">
                 <img src="./icons/trash bin.png" alt="Trash">
                 <p class="iconNames"> Trash Bin </p>
             </button>
@@ -309,7 +329,7 @@
     <div id="desktopPopup" class="popup">
         <div class="popupContent">
             <div class="header">Error: No access</div>
-            <div class="closeButton" onclick="closeDeskPopup()">&times;</div>
+            <div class="closeButton" onclick="closeTrashBin()">&times;</div>
             <div id="desktopPrompt"></div>
         </div>
     </div>
@@ -323,16 +343,16 @@
     </div>
 
     <div id="untitledDocument">
-        <header class="docHeader">
+        <header class="webHeader">
             <span>Untitled Document - TypeWriter</span>
             <button class="closeButton" onclick="window.closeDocument()">&times;</button>
         </header>
 
-        <nav id="docRibbon">
+        <nav id="webRibbon">
             <div id="ribbonButtonsContainer"></div>
         </nav>
 
-        <section id="docRibbonIcons">
+        <section id="webRibbonIcons">
             <div id="ribbonIconsContainer"></div>
         </section>
 
@@ -341,7 +361,25 @@
         </main>
     </div>
 
-    
+    <div id="searchEngine">
+        <header class="webHeader">
+            <span>Search Engine - Home</span>
+            <button class="closeButton" onclick="closeSearch()">&times;</button>
+        </header>
+
+        <nav id="webSearchBar">
+            
+        </nav>
+
+        <section id="searchLogo">
+            
+        </section>
+
+        <main id="docContainer">
+            <div id="ghostText"></div>
+        </main>
+    </div>
+
 
     <script>
         const trash = [
@@ -362,13 +400,13 @@
             "Were the memories not enough for you?",
         ];
 
-        function openDeskPopup(app) {
+        function openTrashBin(app) {
             document.getElementById('desktopPopup').style.display = 'block';
             const randomIndex = Math.floor(Math.random() * app.length);
             document.getElementById("desktopPrompt").innerHTML = `<p>${app[randomIndex]}</p>`;
         }
 
-        function closeDeskPopup() {
+        function closeTrashBin() {
             document.getElementById('desktopPopup').style.display = 'none';
         }
 
@@ -396,6 +434,14 @@
 
         function closeDocument() {
             document.getElementById('untitledDocument').style.display = 'none';
+        }
+
+        function openSearch() {
+            document.getElementById('searchEngine').style.display = 'block';
+        }
+
+        function closeSearch() {
+            document.getElementById('searchEngine').style.display = 'none';
         }
 
         //  ribbon buttons dont edit
@@ -456,7 +502,7 @@
             "I didn’t see what happened, but I already have an idea of what it was… or what it could have been…", 
             "I mean… Guys fooling around... Camp counselors shouting at them to slow down... Squad leaders telling them to pull the breaks...",
             "I was hoping they just blew a fuse or something, but a part of me was hoping they [@%&#)!]",
-            "I mean they [!*^#&@] it after all, after all they did to torment me."
+            "I mean they [!*^#&@] it after all, after all they did to me."
         ];
 
 
