@@ -8,7 +8,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'W95FA', monospace;
+            font-family: 'W95FA', monospace; 
             font-size: 14px;
         }
 
@@ -168,6 +168,34 @@
             background: #fff;
             overflow: auto;
         }
+
+        #searchLogo img{
+            display: block;
+            margin: 50px auto 0;
+            width: 500px;
+            height: auto;
+            image-rendering: pixelated;
+            border: 4px solid #000;
+        }
+
+        #webSearchBar {
+            padding: 10px;
+            background: #f4f4f4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #searchInput {
+            width: 100%;
+            flex: 1;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+
         /* Header styling */
         .webHeader {
             background-color: #2809bc;
@@ -367,17 +395,17 @@
             <button class="closeButton" onclick="closeSearch()">&times;</button>
         </header>
 
-        <nav id="webSearchBar">
-            
-        </nav>
+        <span id="webSearchBar">
+            <input type="text" id="searchInput" placeholder="Type your search...">
+            <button id="searchButton">Search</button>
+        </span>
 
         <section id="searchLogo">
-            
+            <img src="./icons/gugol parody.png" alt="Search Logo">
         </section>
 
-        <main id="docContainer">
-            <div id="ghostText"></div>
-        </main>
+        
+
     </div>
 
 
@@ -443,6 +471,20 @@
         function closeSearch() {
             document.getElementById('searchEngine').style.display = 'none';
         }
+
+        // search button functionality
+        document.getElementById('searchButton').onclick = function() {
+            const query = document.getElementById('searchInput').value;
+            alert('You searched for: '+ query);
+        };
+
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('searchButton').click();
+            }
+        });
+
 
         //  ribbon buttons dont edit
         const ribbonLabels = ["Home", "File", "Edit", "View", "Insert", "Format", "Tools", "Table", "Window", "Help"];

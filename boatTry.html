@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boat Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'W95FA', monospace;
+        }
+        #gameArea {
+            position: relative;
+            max-width: 1000px;
+            height: 400px;
+            margin: 40px auto;
+            background: #b3e0ff;
+            border: 4px solid #222;
+            overflow: hidden;
+        }
+        #boat {
+            position: absolute;
+            left: 40px;
+            width: 60px;
+            height: 60px;
+            image-rendering: pixelated;
+            z-index: 2;
+        }
+        #boat img {
+            width: 200px;
+            display: block;
+        }
+        .obstacle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            image-rendering: pixelated;
+            left: 600px;
+            z-index: 1;
+        }
+        #gameOverMsg {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            font-size: 2em;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+            flex-direction: column;
+        }
+        #gameOverMsg button {
+            margin-top: 20px;
+            font-size: 1em;
+            padding: 10px 20px;
+            border: none;
+            background: #fff;
+            color: #222;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        #timer {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #222;
+            background: #fff8;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            z-index: 5;
+        }
+        #instructions {
+            text-align: center;
+            margin-top: 20px;
+            color: #222;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameArea">
+        <div id="boat"><img id="boatImg" src="./icons/boatF1.png"></div>
+        <div id="timer">0</div>
+        <div id="gameOverMsg">
+            <span id="gameOverText">Game Over</span>
+            <button onclick="location.reload()">Restart</button>
+        </div>
+    </div>
+    <div id="instructions">
+        Use <b>Up</b> and <b>Down</b> arrow keys to move the boat.<br>
+        Avoid the obstacles!
+    </div>
+    <script>
+        // --- CONFIG ---
+        const lanes = [60, 170, 280]; // y positions for up, middle, down
+        let currentLane = 1; // start in the middle
+        let obstacles = [];
+        let gameRunning = true;
+        let gameTimer;
+        let animationFrame;
+        let seconds = 0;
+        let maxSeconds = Math.floor(15 + Math.random() * 5); // 15-20 seconds
+        let lastObstacleTime = performance.now();
+        const obstacleDelay = 900;
+
+        // --- DOM ---
+        const gameArea = document.getElementById('gameArea');
+        const boat = document.getElementById('boat');
+        const boatImg = document.getElementById('boatImg');
+        const gameOverMsg = document.getElementById('gameOverMsg');
+        const gameOverText = document.getElementById('gameOverText');
+        const timer = document.getElementById('timer');
+
+        function setBoatPosition() {
+            boat.style.top = lanes[currentLane] + 'px';
+        }
+        setBoatPosition();
+
+        document.addEventListener('keydown', function(e) {
+            if (!gameRunning) return;
+            if (e.key === 'ArrowUp' && currentLane > 0) {
+                currentLane--;
+                setBoatPosition();
+            }
+            if (e.key === 'ArrowDown' && currentLane < 2) {
+                currentLane++;
+                setBoatPosition();
+            }
+        });
+
+        function spawnObstacle() {
+            if (!gameRunning) return;
+            const lane = Math.floor(Math.random() * 3);
+
+            // Randomly choose obstacle type
+            const obstacleImages = [
+                "./icons/woodFloat.png",
+                "./icons/rockFloat.png"
+            ];
+            const img = obstacleImages[Math.floor(Math.random() * obstacleImages.length)];
+
+            const obs = document.createElement('div');
+            obs.className = 'obstacle';
+            obs.style.top = lanes[lane] + 'px';
+            obs.dataset.lane = lane;
+            obs.style.left = (gameArea.offsetWidth + 20) + 'px';
+            obs.style.background = `url('${img}') no-repeat center/contain`;
+            obs.style.imageRendering = 'pixelated';
+            gameArea.appendChild(obs);
+            obstacles.push(obs);
+        }
+
+        function gameLoop(now) {
+            if (!gameRunning) return;
+
+            // Spawn obstacles based on elapsed time
+            if (now - lastObstacleTime > obstacleDelay) {
+                spawnObstacle();
+                lastObstacleTime = now;
+            }
+
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                const obs = obstacles[i];
+                let left = parseInt(obs.style.left);
+                left -= 6;
+                obs.style.left = left + 'px';
+
+                // Collision detection
+                if (left < 100 && left > 40 && parseInt(obs.dataset.lane) === currentLane) {
+                    endGame("You crashed!");
+                }
+
+                // Remove off-screen obstacles
+                if (left < -100) {
+                    gameArea.removeChild(obs);
+                    obstacles.splice(i, 1);
+                }
+            }
+            animationFrame = requestAnimationFrame(gameLoop);
+        }
+
+        function endGame(message) {
+            if (!gameRunning) return;
+            gameRunning = false;
+            clearTimeout(gameTimer);
+            cancelAnimationFrame(animationFrame);
+            gameOverText.textContent = message || "Game Over";
+            gameOverMsg.style.display = 'flex';
+        }
+
+        // Timer display
+        function updateTimer() {
+            timer.textContent = seconds;
+            if (!gameRunning) return;
+            seconds++;
+            if (seconds > maxSeconds) {
+                endGame("Time's up! You survived.");
+            } else {
+                setTimeout(updateTimer, 1000);
+            }
+        }
+
+        // --- START GAME ---
+        animationFrame = requestAnimationFrame(gameLoop);
+        setTimeout(updateTimer, 1000);
+        gameTimer = setTimeout(() => endGame("Time's up! You survived."), 1000 * maxSeconds);
+        gameOverMsg.style.display = 'none';
+    </script>
+</body>
+</html>
