@@ -8,18 +8,20 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'W95FA', monospace;
+            font-size: 14px;
         }
 
         html, body{
             height: 100%;
             color: #000;
-            font-family: 'Courier New', Courier, monospace;
         }
 
         button{
             border: none;
             background: none;
             cursor: pointer;
+            max-width: 100px;
         }
 
         #mainBody{
@@ -32,16 +34,18 @@
             flex-wrap: wrap;
         }
 
-        .icons{
+        .desktopIcons:hover{
+            background-color: #289999;
+        }
+
+        .desktopIcons{
             display: flex;
             text-align: center;
             margin: 10px;
-            max-width: 100px;
         }
 
-        .icons:hover{
-            background-color: #289999;
-            border-radius: 15px;
+        .libraryIcons:hover{
+            background-color: #d8d8d8;
         }
 
         .icons img{
@@ -55,6 +59,7 @@
             font-size: 14px;
             color: #333;
             overflow: auto;
+            padding-bottom: 5px;
         }
 
         #taskBar{
@@ -72,66 +77,444 @@
         #startButton:hover{
             background-color: #d4d4d4;
         }
+
+        .popup{
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+        }
+
+        #libraryPopup{
+            margin: 12%;
+        }
+
+        .popupContent{
+            background-image: url("./icons/error.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 10% auto;
+            padding: 20px;
+            width: 630px;
+            height: 370px;
+            position: relative;
+            image-rendering: pixelated;
+        }
+
+        .libraryContent{
+            background-image: url("./icons/library menu.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: start;
+            align-content: start;
+            margin: 10% auto;
+            padding: 20px;
+            width: 630px;
+            height: 370px;
+            position: relative;
+            text-align: left;
+            image-rendering: pixelated;
+        }
+
+        .header{
+            width: 100%;
+            height: 30px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            color: #fff;
+            font-size: 22.4px;
+        }
+
+        .closeButton {
+            position: absolute;
+            right: 10px; top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        #untitledDocument {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #fff;
+            overflow: auto;
+        }
+        /* Header styling */
+        .docHeader {
+            background-color: #55aaaa;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Ribbon container */
+        #docRibbon,
+        #docRibbonIcons {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            background-color: #e0e0e0;
+            border: 2px solid #000;
+        }
+
+        #docRibbonIcons {
+            border-top: none;
+        }
+
+        /* Shared ribbon item styles */
+        #ribbonButtonsContainer,
+        #ribbonIconsContainer {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .ribbonButtons,
+        .ribbonIcons {
+            height: 100%;
+            font-family: Tahoma, sans-serif;
+            font-size: 13px;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e0e0e0;
+            border: 1px solid #545659;
+            border-top-color: #f4f5f6;
+            border-left-color: #f4f5f6;
+            cursor: pointer;
+        }
+
+        .ribbonButtons {
+            width: 100px;
+            min-width: 70px;
+        }
+
+        .ribbonIcons {
+            width: 50px;
+        }
+
+        .ribbonButtons:hover,
+        .ribbonIcons:hover {
+            background-color: #d4d4d4;
+        }
+
+        .ribbonIconImg{
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            pointer-events: none;
+            image-rendering: pixelated;
+        }
+
+        /* Document container */
+        #docContainer {
+            max-width: 1400px;
+            min-height: 800px;
+            margin: 60px auto 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px solid #222;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Ghost text */
+        #ghostText {
+            color: #888;
+            font-style: italic;
+            padding: 5px;
+        }
+
+        /* Editable line */
+        .editableLine {
+            border-bottom: 1px solid #444;
+            padding: 5px;
+            outline: none;
+        }
+
+        /* Locked line */
+        .lockedLine {
+            color: #888;
+            border-bottom: 1px solid #222;
+            pointer-events: none;
+        }
     </style>
 </head>
+
 <body>
     <div id="mainBody">
-
-        <div class="icons">
-            <button onclick="openPopup3()">
-                <img src="./icons/folder.png" alt="Library">
+        <div class="icons desktopIcons">
+            <button onclick="openDeskPopup(trash)">
+                <img src="./icons/trash bin.png" alt="Trash">
                 <p class="iconNames"> Trash Bin </p>
             </button>
         </div>
-
-        <div class="icons">
+        <div class="icons desktopIcons">
             <button onclick="openLibrary()">
-                <img src="./icons/folder.png" alt="Library">
+                <img src="./icons/library.png" alt="Library">
                 <p class="iconNames"> Library </p>
             </button>
         </div>
-
-        <div class="icons">
+        <div class="icons desktopIcons">
             <button onclick="openSearch()">
-                <img src="./icons/folder.png" alt="Library">
+                <img src="./icons/search engine.png" alt="Search">
                 <p class="iconNames"> Search Engine </p>
             </button>
         </div>
-
     </div>
+
     <div id="taskBar"> 
         <img id="startButton" src="./icons/48by16 start.png">
     </div>
 
+    <div id="myLibrary" class="popup">
+        <div class="libraryContent">
+            <div class="header">Library</div>
+            <div class="closeButton" onclick="closeLibrary()">&times;</div>
+            <div class="icons libraryIcons">
+                <button onclick="openLibPopup(folder)">
+                    <img src="./icons/folder.png" alt="Folder">
+                    <p class="iconNames"> Retreat Pictures </p>
+                </button>
+            </div>
+            
+            <div class="icons libraryIcons">
+                <button onclick="openLibPopup(diary)">
+                    <img src="./icons/diary.png" alt="Diary">
+                    <p class="iconNames"> Diary </p>
+                </button>
+            </div>
+
+            <div class="icons libraryIcons">
+                <button onclick="openDocument()">
+                    <img src="./icons/document.png" alt="Document">
+                    <p class="iconNames"> Untitled Document </p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="desktopPopup" class="popup">
+        <div class="popupContent">
+            <div class="header">Error: No access</div>
+            <div class="closeButton" onclick="closeDeskPopup()">&times;</div>
+            <div id="desktopPrompt"></div>
+        </div>
+    </div>
+
+    <div id="libraryPopup" class="popup">
+        <div class="popupContent">
+            <div class="header">Error: No access</div>
+            <div class="closeButton" onclick="closeLibPopup()">&times;</div>
+            <div id="libraryPrompt"></div>
+        </div>
+    </div>
+
+    <div id="untitledDocument">
+        <header class="docHeader">
+            <span>Untitled Document - TypeWriter</span>
+            <button class="closeButton" onclick="window.closeDocument()">&times;</button>
+        </header>
+
+        <nav id="docRibbon">
+            <div id="ribbonButtonsContainer"></div>
+        </nav>
+
+        <section id="docRibbonIcons">
+            <div id="ribbonIconsContainer"></div>
+        </section>
+
+        <main id="docContainer">
+            <div id="ghostText"></div>
+        </main>
+    </div>
+
+    
+
     <script>
-        function openCenteredPopup(url, name, width, height) {
-            const left = (window.screen.width / 2) - (width / 2);
-            const top = (window.screen.height / 2) - (height / 2);
-            window.open(
-                url,
-                name,
-                `width=${width},height=${height},left=${left},top=${top}`
-            );
+        const trash = [
+            "You cannot escape your past.",
+            "What's done is done.",
+            "There's no turning back now.",
+        ];
+        
+        const diary = [
+            "No more secrets.",
+            "Not a single sentiment of yours valid.",
+            "Too scared to confess?",
+        ];
+
+        const folder = [
+            "Don't you have shame on yourself?",
+            "Did you already forget?",
+            "Were the memories not enough for you?",
+        ];
+
+        function openDeskPopup(app) {
+            document.getElementById('desktopPopup').style.display = 'block';
+            const randomIndex = Math.floor(Math.random() * app.length);
+            document.getElementById("desktopPrompt").innerHTML = `<p>${app[randomIndex]}</p>`;
         }
 
-        function openFullWindow(url, name) {
-            window.open(
-                url,
-                name,
-            )
+        function closeDeskPopup() {
+            document.getElementById('desktopPopup').style.display = 'none';
+        }
+
+        function openLibPopup(app) {
+            document.getElementById('libraryPopup').style.display = 'block';
+            const randomIndex = Math.floor(Math.random() * app.length);
+            document.getElementById("libraryPrompt").innerHTML = `<p>${app[randomIndex]}</p>`;
+        }
+
+        function closeLibPopup() {
+            document.getElementById('libraryPopup').style.display = 'none';
         }
 
         function openLibrary() {
-            var myWindow = window.openCenteredPopup('PART 2.html', 'myLibrary', 703, 270);
+            document.getElementById('myLibrary').style.display = 'block';
         }
 
-        function openPopup3() {
-            var myWindow = window.openCenteredPopup('POPUP 3.html', 'myPopup', 400, 180);
+        function closeLibrary() {
+            document.getElementById('myLibrary').style.display = 'none';
         }
 
-        function openSearch() {
-            var myWindow = window.openFullWindow('PART 4.html', 'mySearch');
+        function openDocument() {
+            document.getElementById('untitledDocument').style.display = 'block';
         }
+
+        function closeDocument() {
+            document.getElementById('untitledDocument').style.display = 'none';
+        }
+
+        //  ribbon buttons dont edit
+        const ribbonLabels = ["Home", "File", "Edit", "View", "Insert", "Format", "Tools", "Table", "Window", "Help"];
+        const ribbonButtonsArea = document.getElementById("ribbonButtonsContainer");
+
+        for (let i = 0; i < ribbonLabels.length; i++) {
+            const button = document.createElement("div");
+            button.className = "ribbonButtons";
+            button.textContent = ribbonLabels[i];
+            ribbonButtonsArea.appendChild(button);
+        }
+
+
+        // ribbon icons edit only to put the icons
+        const ribbonIcons = ["blank document.png", "open folder.png", "select all.png", "find.png", "undo.png", "redo.png", "save.png", "cut.png", "copy.png", "paste.png"];
+        const ribbonIconsArea = document.getElementById("ribbonIconsContainer");
+
+        for (let i = 0; i < ribbonIcons.length; i++) {
+            const icon = document.createElement("div");
+            icon.className = "ribbonIcons";
+            
+            // Create an image element
+            const img = document.createElement("img");
+            img.src = "icons/" + ribbonIcons[i];
+            img.alt = ribbonIcons[i];
+            img.className = "ribbonIconImg"; // for CSS styling
+
+            icon.appendChild(img);
+            ribbonIconsArea.appendChild(icon);
+        }
+
+
+
+        // story lines the player will type, edit and put story line
+        const storyLines = [
+            "My name is Harvey P. Ramos, I’m a Grade 12 ICT student from Don Bosco Anselmo High School.",
+            "Last November 21 we had a nature retreat at Camp Katarungan.",
+            "There were lots of fun activities such as Hiking, Swimming, Camp games... and even boating.",
+            "Our squad leader was a middle aged man with a background in mountain climbing.",
+            "On the first day, I bumped into Dan, we used to be a good friend back in middle school.",
+            "On the way to the docks for our first activity, it was fishing, unsurprisingly.",
+            "Dan made fun of me for not knowing how to cast my line.",
+            "And when I ignored him, he just got more upset, I just threw on the towel and called it a day.",
+            "On the second day, we had hiking, our squad was teamed up with Dan’s squad.",
+            "And the entire time we were there he did nothing but criticize me, like every single chance he got.",
+            "On the third and last day, we had swimming in the morning and fishing in the afternoon.",
+            "And again, Dan just had to find a way to make fun of my swim trunks.",
+            "That afternoon I went to the docks to check the fuel line on our boat, our squad leader told us to check them before the next activity.",
+            "I noticed Dan’s fuel line wasn’t connected to anything, but since their’s is a different model, I just connected it to what looks right.",
+            "I mean, they’re gonna double check it anyways so it’s fine.",
+            "That afternoon, the camp leaders instructed us to go on the lake on our own time, their only requirement was to bring back a fish after.",
+            "I heard Dan’s group was planning to go out at night, which was good for me since he won’t be terrorizing me the entire time.",
+            "But thats also the last time I heard about Dan’s group...",
+            "I heard they put their engine on turbo and speeded across the lake, despite their squad leaders warning.",
+            "They’re probably just trying to get the most of our stay here by using up all the fuel in their fuel tank.",
+            "But, I heard that when they’re about to go back to the docks they weren’t slowing down... and then a crash...",
+            "I didn’t see what happened, but I already have an idea of what it was… or what it could have been…", 
+            "I mean… Guys fooling around... Camp counselors shouting at them to slow down... Squad leaders telling them to pull the breaks...",
+            "I was hoping they just blew a fuse or something, but a part of me was hoping they [@%&#)!]",
+            "I mean they [!*^#&@] it after all, after all they did to torment me."
+        ];
+
+
+        let lineNumber = 0;
+
+        // get elem
+        const ghostText = document.getElementById("ghostText");
+        const documentArea = document.getElementById("docContainer");
+
+
+
+        // new line
+        function addEditableLine() {
+            const line = document.createElement("div");
+            line.id = "line-" + lineNumber;
+            line.setAttribute("contenteditable", "true");
+            line.classList.add("editableLine");
+            documentArea.appendChild(line);
+            line.focus();
+        }
+
+        // make a line READ-ONLY LOCKS THE LINE
+        function lockLine(line) {
+            line.setAttribute("contenteditable", "false");
+            line.classList.remove("editableLine");
+            line.classList.add("lockedLine");
+        }
+
+        // prints ghost text
+        function showGhostText() {
+            ghostText.textContent = storyLines[lineNumber];
+        }
+
+
+
+        // start game
+        document.addEventListener("DOMContentLoaded", function () {
+            showGhostText();
+            addEditableLine();
+
+            documentArea.addEventListener("keydown", function (event) {
+                const currentLine = document.getElementById("line-" + lineNumber);
+
+                // when enter is pressed, LOCK
+                if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault(); // stops 'enter' from making a new line
+                    lockLine(currentLine);
+                    lineNumber++;
+
+                    if (lineNumber < storyLines.length) {
+                        showGhostText();
+                        addEditableLine();
+                    } else {
+                        ghostText.textContent = "I hope they don't find out.";
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>

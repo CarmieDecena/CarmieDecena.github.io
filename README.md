@@ -1,4 +1,8 @@
 **TODO**:
+<<<<<<< HEAD
+=======
+- Make the other pages open in the same page as opposed to opening a new window (In Progress)
+>>>>>>> 1c22f41 (updated the code, combined them into fewer html files, will separate soon after completion)
 - Try what happens in chrome, firefox, etc
 - Rename the files to standard naming conventions and put it in different folders
 - Test behavior on mobile phones (prio)
