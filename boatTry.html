@@ -21,13 +21,14 @@
         #boat {
             position: absolute;
             left: 40px;
-            width: 60px;
-            height: 60px;
+            width: 200px;
+            height: auto;
             image-rendering: pixelated;
             z-index: 2;
         }
         #boat img {
-            width: 200px;
+            width: 100%;
+            height: auto;
             display: block;
         }
         .obstacle {
@@ -102,9 +103,10 @@
         let gameTimer;
         let animationFrame;
         let seconds = 0;
-        let maxSeconds = Math.floor(15 + Math.random() * 5); // 15-20 seconds
+        let maxSeconds = Math.floor(10 + Math.random() * 5); // 15-20 seconds
         let lastObstacleTime = performance.now();
         const obstacleDelay = 900;
+        let finalPhase = false;
 
         // --- DOM ---
         const gameArea = document.getElementById('gameArea');
@@ -153,6 +155,26 @@
             obstacles.push(obs);
         }
 
+        function spawnFinalObstacles() {
+            const obstacleImages = [
+                "./icons/woodFloat.png",
+                "./icons/rockFloat.png"
+            ];
+
+            for (let lane = 0; lane < lanes.length; lane++) {
+                const img = obstacleImages[Math.floor(Math.random() * obstacleImages.length)];
+                const obs = document.createElement('div');
+                obs.className = 'obstacle';
+                obs.style.top = lanes[lane] + 'px';
+                obs.dataset.lane = lane;
+                obs.style.left = (gameArea.offsetWidth + 20) + 'px';
+                obs.style.background = `url('${img}') no-repeat center/contain`;
+                obs.style.imageRendering = 'pixelated';
+                gameArea.appendChild(obs);
+                obstacles.push(obs);
+            }
+        }
+
         function gameLoop(now) {
             if (!gameRunning) return;
 
@@ -169,8 +191,18 @@
                 obs.style.left = left + 'px';
 
                 // Collision detection
-                if (left < 100 && left > 40 && parseInt(obs.dataset.lane) === currentLane) {
-                    endGame("You crashed!");
+                if (left < 180 && left > 20 && parseInt(obs.dataset.lane) === currentLane) {
+                    if (finalPhase) {
+                        gameRunning = false;
+                        cancelAnimationFrame(animationFrame);
+                        gameOverText.innerHTML = "System error! <br>Type: Server-side error. <br>Cause: Brakes not found.";
+                        gameOverMsg.style.display = 'flex';
+                    } else {
+                        gameRunning = false;
+                        cancelAnimationFrame(animationFrame);
+                        gameOverText.innerHTML = "You crashed!";
+                        gameOverMsg.style.display = 'flex';
+                    }
                 }
 
                 // Remove off-screen obstacles
@@ -183,12 +215,10 @@
         }
 
         function endGame(message) {
-            if (!gameRunning) return;
-            gameRunning = false;
-            clearTimeout(gameTimer);
-            cancelAnimationFrame(animationFrame);
-            gameOverText.textContent = message || "Game Over";
-            gameOverMsg.style.display = 'flex';
+            if (!gameRunning || finalPhase) return;
+            finalPhase = true;
+
+            spawnFinalObstacles();
         }
 
         // Timer display
@@ -197,7 +227,7 @@
             if (!gameRunning) return;
             seconds++;
             if (seconds > maxSeconds) {
-                endGame("Time's up! You survived.");
+                endGame();
             } else {
                 setTimeout(updateTimer, 1000);
             }
@@ -206,7 +236,7 @@
         // --- START GAME ---
         animationFrame = requestAnimationFrame(gameLoop);
         setTimeout(updateTimer, 1000);
-        gameTimer = setTimeout(() => endGame("Time's up! You survived."), 1000 * maxSeconds);
+        gameTimer = setTimeout(() => endGame(), 1000 * maxSeconds);
         gameOverMsg.style.display = 'none';
     </script>
 </body>
