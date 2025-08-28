@@ -1,0 +1,294 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'W95FA', monospace; 
+    font-size: 14px;
+}
+
+html, body{
+    height: 100%;
+    color: #000;
+}
+
+button{
+    border: none;
+    background: none;
+    cursor: pointer;
+    max-width: 100px;
+}
+
+#mainBody{
+    background-color: #55aaaa;
+    height: 95%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+.desktopIcons:hover{
+    background-color: #289999;
+}
+
+.desktopIcons{
+    display: flex;
+    text-align: center;
+    margin: 10px;
+}
+
+.libraryIcons:hover{
+    background-color: #d8d8d8;
+}
+
+.icons img{
+    width: 100px;
+    height: 100px;
+    image-rendering: pixelated;
+}
+
+.iconNames{
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+    overflow: auto;
+    padding-bottom: 5px;
+}
+
+#taskBar{
+    background-color: #c2c6ca;
+    height: 5%;
+    width: 100%;
+    image-rendering: pixelated;
+}
+
+#startButton{
+    height: 90%;
+    cursor: pointer;
+}
+
+#startButton:hover{
+    background-color: #d4d4d4;
+}
+
+.popup{
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+}
+
+#libraryPopup{
+    margin: 12%;
+}
+
+.popupContent{
+    background-image: url("./icons/error.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 10% auto;
+    padding: 20px;
+    width: 630px;
+    height: 370px;
+    position: relative;
+    image-rendering: pixelated;
+}
+
+.libraryContent{
+    background-image: url("./icons/library menu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    align-content: start;
+    margin: 10% auto;
+    padding: 20px;
+    width: 630px;
+    height: 370px;
+    position: relative;
+    text-align: left;
+    image-rendering: pixelated;
+}
+
+.header{
+    width: 100%;
+    height: 30px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    color: #fff;
+    font-size: 22.4px;
+}
+
+.popup .closeButton {
+    position: absolute;
+    top: 18px;   right: 20px; 
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.webHeader .closeButton {
+    position: absolute;
+    right: 10px; 
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+}
+
+#untitledDocument {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    overflow: auto;
+}
+
+#searchEngine {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    overflow: auto;
+}
+
+#searchLogo img{
+    display: block;
+    margin: 50px auto 0;
+    width: 500px;
+    height: auto;
+    image-rendering: pixelated;
+    border: 4px solid #000;
+}
+
+#webSearchBar {
+    padding: 10px;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#searchInput {
+    width: 100%;
+    flex: 1;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+/* Header styling */
+.webHeader {
+    background-color: #2809bc;
+    color: #fff;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Ribbon container */
+#webRibbon,
+#webRibbonIcons {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    background-color: #e0e0e0;
+    border: 2px solid #000;
+}
+
+#webRibbonIcons {
+    border-top: none;
+}
+
+/* Shared ribbon item styles */
+#ribbonButtonsContainer,
+#ribbonIconsContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.ribbonButtons,
+.ribbonIcons {
+    height: 100%;
+    font-family: Tahoma, sans-serif;
+    font-size: 13px;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;
+    border: 1px solid #545659;
+    border-top-color: #f4f5f6;
+    border-left-color: #f4f5f6;
+    cursor: pointer;
+}
+
+.ribbonButtons {
+    width: 100px;
+    min-width: 70px;
+}
+
+.ribbonIcons {
+    width: 50px;
+}
+
+.ribbonButtons:hover,
+.ribbonIcons:hover {
+    background-color: #d4d4d4;
+}
+
+.ribbonIconImg{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    pointer-events: none;
+    image-rendering: pixelated;
+}
+
+/* Document container */
+#docContainer {
+    max-width: 1400px;
+    min-height: 800px;
+    margin: 60px auto 0;
+    padding: 15px;
+    background-color: #fff;
+    border: 2px solid #222;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Ghost text */
+#ghostText {
+    color: #888;
+    font-style: italic;
+    padding: 5px;
+}
+
+/* Editable line */
+.editableLine {
+    border-bottom: 1px solid #444;
+    padding: 5px;
+    outline: none;
+}
+
+/* Locked line */
+.lockedLine {
+    color: #888;
+    border-bottom: 1px solid #222;
+    pointer-events: none;
+}
