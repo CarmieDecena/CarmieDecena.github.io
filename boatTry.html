@@ -105,10 +105,10 @@
         let seconds = 0;
         let maxSeconds = Math.floor(10 + Math.random() * 5); // 15-20 seconds
         let lastObstacleTime = performance.now();
-        const obstacleDelay = 900;
         let finalPhase = false;
 
         // --- DOM ---
+        const obstacleDelay = 900;
         const gameArea = document.getElementById('gameArea');
         const boat = document.getElementById('boat');
         const boatImg = document.getElementById('boatImg');
