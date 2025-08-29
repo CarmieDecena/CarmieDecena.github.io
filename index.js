@@ -27,13 +27,13 @@ function closeTrashBin() {
 }
 
 function openLibPopup(app) {
-    document.getElementById('libraryPopup').style.display = 'block';
+    document.getElementById('diaryPopup').style.display = 'block';
     const randomIndex = Math.floor(Math.random() * app.length);
     document.getElementById("libraryPrompt").innerHTML = `<p>${app[randomIndex]}</p>`;
 }
 
 function closeLibPopup() {
-    document.getElementById('libraryPopup').style.display = 'none';
+    document.getElementById('diaryPopup').style.display = 'none';
 }
 
 function openLibrary() {
@@ -42,6 +42,14 @@ function openLibrary() {
 
 function closeLibrary() {
     document.getElementById('myLibrary').style.display = 'none';
+}
+
+function openRetreatPictures() {
+    document.getElementById('retreatPictures').style.display = 'block';
+}
+
+function closeRetreatPictures() {
+    document.getElementById('retreatPictures').style.display = 'none';
 }
 
 function openDocument() {
@@ -58,6 +66,25 @@ function openSearch() {
 
 function closeSearch() {
     document.getElementById('searchEngine').style.display = 'none';
+}
+
+function openBoatGame() {
+    document.getElementById('browserBoatGame').style.display = 'block';
+}
+
+function closeBoatGame() {
+    document.getElementById('browserBoatGame').style.display = 'none';
+}
+
+function closeSystemErrorPopup() {
+    document.getElementById('systemErrorPopup').style.display = 'none';
+    document.getElementById('browserBoatGame').style.display = 'none';
+    document.getElementById('desktopView').style.display = 'flex';
+}
+
+function closeSignInPage(){
+    document.getElementById('signInPage').style.display = 'none';
+    signedIn = true;
 }
 
 // search button functionality
@@ -108,31 +135,28 @@ for (let i = 0; i < ribbonIcons.length; i++) {
 
 // story lines the player will type, edit and put story line
 const storyLines = [
-    "My name is Harvey P. Ramos, I’m a Grade 12 ICT student from Don Bosco Anselmo High School.",
-    "Last November 21 we had a nature retreat at Camp Katarungan.",
-    "There were lots of fun activities such as Hiking, Swimming, Camp games... and even boating.",
-    "Our squad leader was a middle aged man with a background in mountain climbing.",
-    "On the first day, I bumped into Dan, we used to be a good friend back in middle school.",
-    "On the way to the docks for our first activity, it was fishing, unsurprisingly.",
-    "Dan made fun of me for not knowing how to cast my line.",
-    "And when I ignored him, he just got more upset, I just threw on the towel and called it a day.",
-    "On the second day, we had hiking, our squad was teamed up with Dan’s squad.",
-    "And the entire time we were there he did nothing but criticize me, like every single chance he got.",
-    "On the third and last day, we had swimming in the morning and fishing in the afternoon.",
-    "And again, Dan just had to find a way to make fun of my swim trunks.",
-    "That afternoon I went to the docks to check the fuel line on our boat, our squad leader told us to check them before the next activity.",
-    "I noticed Dan’s fuel line wasn’t connected to anything, but since their’s is a different model, I just connected it to what looks right.",
-    "I mean, they’re gonna double check it anyways so it’s fine.",
-    "That afternoon, the camp leaders instructed us to go on the lake on our own time, their only requirement was to bring back a fish after.",
-    "I heard Dan’s group was planning to go out at night, which was good for me since he won’t be terrorizing me the entire time.",
-    "But thats also the last time I heard about Dan’s group...",
-    "I heard they put their engine on turbo and speeded across the lake, despite their squad leaders warning.",
-    "They’re probably just trying to get the most of our stay here by using up all the fuel in their fuel tank.",
-    "But, I heard that when they’re about to go back to the docks they weren’t slowing down... and then a crash...",
-    "I didn’t see what happened, but I already have an idea of what it was… or what it could have been…", 
-    "I mean… Guys fooling around... Camp counselors shouting at them to slow down... Squad leaders telling them to pull the breaks...",
-    "I was hoping they just blew a fuse or something, but a part of me was hoping they [@%&#)!]",
-    "I mean they [!*^#&@] it after all, after all they did to me."
+    "I am Harvey Ramos, a Grade 12 ICT student from Don Bosco Anselmo Rural High School,",
+    "and a few weeks ago, I saw someone die right in front of me.",
+    "We had a nature retreat at Camp Katarungan. There a forest lay, beside a river that stretched for miles. ",
+    "We hiked, swam, and played. We rode boats across the river and even caught some fish along the way.",
+    "Everything was supposed to be so memorable, so fun … But I couldn’t enjoy it with Dan around.",
+    "(this is a cut all lines above should be already typed out, will code soon)",
+    "For years, he made fun of everything I did",
+    "The way I looked, the way I spoke. Fuck, maybe even the way I breathed.",
+    "He always found something to laugh at, some way to humiliate me in front of everyone.",
+    "I thought I’d be safe, away from school. But of course, he just had to be there too.",
+    "He called me names and stole my hiking gear. He even pushed me into the river once.",
+    "I tried to ignore him. I tried to keep calm, but at some point I couldn’t take it anymore. I snapped.",
+    "One night, when I was checking over my boat, I saw something wrong with Dan’s …",
+    "Their engine seemed pretty worn, and when I tried to use the gearshift, it wouldn’t budge into reverse.",
+    "It was dangerous. I knew it. It could’ve gotten someone seriously hurt.",
+    "I could’ve said something. I could’ve warned him. But why would I? Why would I help him?",
+    "That brute. That monster. That spawn of Hell. What exactly did I owe him?",
+    "I left that night without a second thought, knowing full well Dan would get himself hurt eventually.",
+    "Color me surprised when he went full speed the next day and toppled over when he couldn’t slow down.",
+    "He drowned in that river, making headlines at school for weeks.",
+    "But I didn’t cry. I didn’t feel guilt. I didn’t kill him.",
+    "He did that all on his own."    
 ];
 
 
@@ -191,3 +215,213 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+
+// BOAT GAME
+// --- CONFIG ---
+const lanes = [60, 170, 280]; // y positions for up, middle, down
+let currentLane = 1; // start in the middle
+let obstacles = [];
+let gameRunning = true;
+let animationFrame;
+let seconds = 0;
+let maxSeconds = Math.floor(10 + Math.random() * 5); // 15-20 seconds
+let lastObstacleTime = performance.now();
+let finalPhase = false;
+let gameStarted = false;
+
+// --- DOM ---
+const obstacleDelay = 900;
+const gameArea = document.getElementById('gameArea');
+const boat = document.getElementById('boat');
+const boatImg = document.getElementById('boatImg');
+const gameOverMsg = document.getElementById('gameOverMsg');
+const gameOverText = document.getElementById('gameOverText');
+
+function startBoatGame() {
+    if (gameStarted) return;
+    gameStarted = true;
+    document.getElementById('boatGamePrompt').style.display = 'none';
+    gameRunning = true;
+    finalPhase = false;
+    pendingFinalPhase = false;
+    obstacles = [];
+    currentLane = 1;
+    setBoatPosition();
+    lastObstacleTime = performance.now();
+    seconds = 0;
+    maxSeconds = Math.floor(10 + Math.random() * 5);
+    animationFrame = requestAnimationFrame(gameLoop);
+    gameTimer = setTimeout(() => {
+        pendingFinalPhase = true;
+    }, 1000 * maxSeconds);
+}
+
+function setBoatPosition() {
+    boat.style.top = lanes[currentLane] + 'px';
+}
+setBoatPosition();
+
+function spawnObstacle() {
+    if (!gameRunning) return;
+    const lane = Math.floor(Math.random() * 3);
+
+    // Randomly choose obstacle type
+    const obstacleImages = [
+        "./icons/woodFloat.png",
+        "./icons/rockFloat.png"
+    ];
+    const img = obstacleImages[Math.floor(Math.random() * obstacleImages.length)];
+
+    const obs = document.createElement('div');
+    obs.className = 'obstacle';
+    obs.style.top = lanes[lane] + 'px';
+    obs.dataset.lane = lane;
+    obs.style.left = (gameArea.offsetWidth + 20) + 'px';
+    obs.style.background = `url('${img}') no-repeat center/contain`;
+    obs.style.imageRendering = 'pixelated';
+    gameArea.appendChild(obs);
+    obstacles.push(obs);
+}
+
+function spawnFinalObstacles() {
+    const obstacleImages = [
+        "./icons/woodFloat.png",
+        "./icons/rockFloat.png"
+    ];
+
+    for (let lane = 0; lane < lanes.length; lane++) {
+        const img = obstacleImages[Math.floor(Math.random() * obstacleImages.length)];
+        const obs = document.createElement('div');
+        obs.className = 'obstacle';
+        obs.style.top = lanes[lane] + 'px';
+        obs.dataset.lane = lane;
+        obs.style.left = (gameArea.offsetWidth + 20) + 'px';
+        obs.style.background = `url('${img}') no-repeat center/contain`;
+        obs.style.imageRendering = 'pixelated';
+        obs.dataset.final = "true";
+        gameArea.appendChild(obs);
+        obstacles.push(obs);
+    }
+}
+
+function resetBoatGame() {
+    // Stop animation
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+
+    if (typeof gameTimer !== "undefined" && gameTimer) {
+        clearTimeout(gameTimer);
+        gameTimer = null;
+    }   
+    // Reset variables
+    gameRunning = false;
+    gameStarted = false;
+    finalPhase = false;
+    pendingFinalPhase = false;
+    obstacles = [];
+    currentLane = 1;
+    seconds = 0;
+    maxSeconds = Math.floor(10 + Math.random() * 5);
+
+    const obsElems = document.querySelectorAll('.obstacle');
+    obsElems.forEach(elem => elem.remove());
+
+    setBoatPosition();
+
+    gameOverMsg.style.display = 'none';
+    document.getElementById('boatGamePrompt').style.display = 'block';
+}
+
+let pendingFinalPhase = false; 
+
+function gameLoop(now) {
+    if (!gameRunning) return;
+
+    // Spawn obstacles based on elapsed time
+    if (!pendingFinalPhase && !finalPhase && (now - lastObstacleTime > obstacleDelay)) {
+        spawnObstacle();
+        lastObstacleTime = now;
+    }
+
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+        const obs = obstacles[i];
+        let left = parseInt(obs.style.left);
+        left -= 6;
+        obs.style.left = left + 'px';
+
+        // Collision detection
+        if (left < 180 && left > 20 && parseInt(obs.dataset.lane) === currentLane) {
+            if (obs.dataset.final === "true") {
+                gameRunning = false;
+                cancelAnimationFrame(animationFrame);
+                gameOverMsg.innerHTML = "You crashed!";
+                gameOverMsg.style.display = 'flex';
+
+                // Show the error popup automatically after a short delay for effect
+                setTimeout(function() {
+                    gameOverMsg.style.display = 'none';
+                    document.getElementById('systemErrorMsg').innerHTML = "System error! <br>Type: Server-side error. <br>Cause: Brakes not found.";
+                    document.getElementById('systemErrorPopup').style.display = 'block';
+                }, 1200);
+            } else {
+                gameRunning = false;
+                cancelAnimationFrame(animationFrame);
+                gameOverText.innerHTML = "You crashed!";
+                gameOverMsg.style.display = 'flex';
+
+                // Restart button reloads the game
+                document.getElementById('restartButton').onclick = function() {
+                    resetBoatGame();
+                };
+            }
+        }
+    }
+
+    if (pendingFinalPhase && !finalPhase) {
+        pendingFinalPhase = false;
+        finalPhase = true;
+        spawnFinalObstacles();
+    }
+
+    animationFrame = requestAnimationFrame(gameLoop);
+}
+
+function endGame(message) {
+    if (!gameRunning || finalPhase) return;
+    finalPhase = true;
+
+    spawnFinalObstacles();
+}
+
+// --- START GAME ---
+document.addEventListener('keydown', function(e) {
+    if (!signedIn) return; // Block all game controls until signed in
+
+    if (!gameStarted && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+        startBoatGame();
+        return;
+    }
+    if (!gameRunning) return;
+    if (e.key === 'ArrowUp' && currentLane > 0) {
+        currentLane--;
+        setBoatPosition();
+    }
+    if (e.key === 'ArrowDown' && currentLane < 2) {
+        currentLane++;
+        setBoatPosition();
+    }
+});
+
+gameOverMsg.style.display = 'none';
+
+
+// --- SIGNINPAGE ---
+
+let signedIn = false;
+
+document.getElementById('signInBtn').onclick = function() {
+    document.getElementById('signInPage').style.display = 'none';
+    signedIn = true;
+};

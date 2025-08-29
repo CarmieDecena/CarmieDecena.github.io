@@ -7,10 +7,34 @@
 </head>
 
 <body>
-    <div id="browserBoatGame">
-
+    <div id="signInPage">
+        <h2>WELCOME USER!</h2>
+        <button onclick="closeSignInPage()">Sign In</button>
     </div>
 
+
+    <div id="browserBoatGame">
+        <header class="webHeader">  <!--Header-->
+            <span>Search Engine - Home</span>
+        </header>
+
+        <div id="gameArea">
+
+            <div id="boatGamePrompt">
+                Press <b>Up</b> or <b>Down</b> arrow key to start!
+            </div>
+        
+            <div id="boat"><img id="boatImg" src="./icons/boatF1.png"></div>
+            <div id="gameOverMsg">
+                <span id="gameOverText"></span>
+                <button id="restartButton">Restart</button>
+            </div>
+        </div>
+        <div id="instructions">
+            Use <b>Up</b> and <b>Down</b> arrow keys to move the boat.<br>
+            Avoid the obstacles!
+        </div>
+    </div>
 
     <!--Desktop View-->
     <div id="desktopView">
@@ -47,11 +71,11 @@
     <div id="myLibrary" class="popup">
         <div class="libraryContent">
 
-            <div class="header">Library</div>
+            <div class="popupHeader">Library</div>
             <div class="closeButton" onclick="closeLibrary()">&times;</div>
 
             <div class="icons libraryIcons"> <!--Library Icon 1-->
-                <button onclick="openLibPopup(folder)">
+                <button onclick="openRetreatPictures()">
                     <img src="./icons/folder.png" alt="Folder">
                     <p class="iconNames"> Retreat Pictures </p>
                 </button>
@@ -74,57 +98,84 @@
         </div>
     </div>
 
-    <!--PopUp for Desktop View-->
+    <!-- System Error Popup -->
+    <div id="systemErrorPopup" class="popup">
+        <div class="popupContent">
+
+            <div class="popupHeader">System Error</div>
+            <div class="closeButton" onclick="closeSystemErrorPopup()">&times;</div>
+            <div id="systemErrorMsg"></div>
+
+        </div>
+    </div>
+
+    <!--PopUp | Trash Bin on Desktop-->
     <div id="trashPopup" class="popup">
         <div class="popupContent">
-            <div class="header">Error: No access</div>
+            
+            <div class="popupHeader">Error: No access</div>
             <div class="closeButton" onclick="closeTrashBin()">&times;</div>
             <div id="desktopPrompt"></div>
+
         </div>
     </div>
 
-    <!--PopUp for Library View-->
-    <div id="libraryPopup" class="popup">
+    <!--PopUp | Diary on Library-->
+    <div id="diaryPopup" class="popup">
         <div class="popupContent">
-            <div class="header">Error: No access</div>
+
+            <div class="popupHeader">Error: No access</div>
             <div class="closeButton" onclick="closeLibPopup()">&times;</div>
             <div id="libraryPrompt"></div>
+
         </div>
     </div>
 
-    <div id="untitledDocument">
-        <header class="webHeader">
+    <!--PopUp | Retreat Pictures on Library-->
+    <div id="retreatPictures" class="popup">
+        <div class="libraryContent">
+
+            <div class="popupHeader">Retreat Pictures</div>
+            <div class="closeButton" onclick="closeRetreatPictures()">&times;</div>
+
+        </div>
+    </div>
+
+    <!--Fullscreen | Untitled Document-->
+    <div id="untitledDocument" class="fullScreenView">
+        <header class="webHeader">  <!--Header-->
             <span>Untitled Document - TypeWriter</span>
             <button class="closeButton" onclick="window.closeDocument()">&times;</button>
         </header>
 
-        <nav id="webRibbon">
+        <nav id="webRibbon"> <!--Top Ribbon-->
             <div id="ribbonButtonsContainer"></div>
         </nav>
 
-        <section id="webRibbonIcons">
+        <nav id="webRibbonIcons"> <!--Bottom Ribbon-->
             <div id="ribbonIconsContainer"></div>
-        </section>
+        </nav>
 
-        <main id="docContainer">
+        <main id="docContainer">  <!--Document-->
             <div id="ghostText"></div>
         </main>
     </div>
 
-    <div id="searchEngine">
-        <header class="webHeader">
+    <!--Fullscreen | Search Engine-->
+    <div id="searchEngine" class="fullScreenView">
+        <header class="webHeader">  <!--Header-->
             <span>Search Engine - Home</span>
             <button class="closeButton" onclick="closeSearch()">&times;</button>
         </header>
 
-        <span id="webSearchBar">
+        <span id="webSearchBar"> <!--Search Bar-->
             <input type="text" id="searchInput" placeholder="Type your search...">
             <button id="searchButton">Search</button>
         </span>
 
-        <section id="searchLogo">
+        <div id="searchLogo"> <!--Search Logo-->
             <img src="./icons/gugol parody.png" alt="Search Logo">
-        </section>
+        </div>
     </div>
 
     <script src="./index.js"></script>
