@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: 'W95FA', monospace; 
     font-size: 14px;
+    caret-color: transparent;
 }
 
 html, body{
@@ -18,9 +19,9 @@ button{
     max-width: 100px;
 }
 
-#mainBody{
+#desktopView{
     background-color: #55aaaa;
-    height: 95%;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -28,14 +29,33 @@ button{
     flex-wrap: wrap;
 }
 
-.desktopIcons:hover{
-    background-color: #289999;
-}
-
 .desktopIcons{
     display: flex;
     text-align: center;
     margin: 10px;
+}
+
+.desktopIcons:hover{
+    background-color: #289999;
+}
+
+#taskBar{
+    background-color: #c2c6ca;
+    height: 5%;
+    width: 100%;
+    image-rendering: pixelated;
+    align-self: flex-end;
+    position: absolute;
+    bottom: 0px;
+}
+
+#startButton{
+    height: 90%;
+    cursor: pointer;
+}
+
+#startButton:hover{
+    background-color: #d4d4d4;
 }
 
 .libraryIcons:hover{
@@ -54,22 +74,6 @@ button{
     color: #333;
     overflow: auto;
     padding-bottom: 5px;
-}
-
-#taskBar{
-    background-color: #c2c6ca;
-    height: 5%;
-    width: 100%;
-    image-rendering: pixelated;
-}
-
-#startButton{
-    height: 90%;
-    cursor: pointer;
-}
-
-#startButton:hover{
-    background-color: #d4d4d4;
 }
 
 .popup{
@@ -261,9 +265,9 @@ button{
 
 /* Document container */
 #docContainer {
-    max-width: 1400px;
+    max-width: 1000px;
     min-height: 800px;
-    margin: 60px auto 0;
+    margin: 40px auto 0;
     padding: 15px;
     background-color: #fff;
     border: 2px solid #222;
@@ -284,6 +288,7 @@ button{
     border-bottom: 1px solid #444;
     padding: 5px;
     outline: none;
+    caret-color: red;
 }
 
 /* Locked line */
