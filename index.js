@@ -54,6 +54,7 @@ function closeRetreatPictures() {
 
 function openDocument() {
     document.getElementById('untitledDocument').style.display = 'block';
+    onclick = typeWritter();
 }
 
 function closeDocument() {
@@ -131,16 +132,48 @@ for (let i = 0; i < ribbonIcons.length; i++) {
     ribbonIconsArea.appendChild(icon);
 }
 
+var i = 0;
+var text = 'I am Harvey Ramos, a Grade 12 ICT student from Don Bosco Anselmo Rural High School, \nand a few weeks ago, I saw someone die right in front of me. \nWe had a nature retreat at Camp Katarungan. There a forest lay, beside a river that stretched for miles. \nWe hiked, swam, and played. We rode boats across the river and even caught some fish along the way. \nEverything was supposed to be so memorable, so fun … But I couldn’t enjoy it with Dan around.'
+var speed = 50;
 
+document.getElementById("contButton").style.display = 'none';
+
+function typeWritter(){
+    if (i < text.length){
+        let char = text.charAt(i);
+        if (char === '\n'){
+            document.getElementById("typedStory").innerHTML += '<br>';
+        } else {
+            document.getElementById("typedStory").innerHTML += char;
+        }
+        i++;
+        setTimeout(typeWritter, speed);
+    } else {
+        document.getElementById("contButton").style.display = 'block';
+        document.getElementById("contButton").disabled = false;
+    }
+}
+
+document.getElementById("contButton").onclick = function() {
+    document.getElementById("contButton").style.display = 'none';
+    document.getElementById("contButton").disabled = true;
+    showGhostText();
+    addEditableLine();
+}
+
+function charChecker(){
+    if (textContent[lineNumber] == storyLines[lineNumber]) {
+        lineNumber++;
+        showGhostText();
+        addEditableLine();
+    } else {
+        alert("Incorrect text. Please try again.");
+    }
+}
 
 // story lines the player will type, edit and put story line
 const storyLines = [
-    "I am Harvey Ramos, a Grade 12 ICT student from Don Bosco Anselmo Rural High School,",
-    "and a few weeks ago, I saw someone die right in front of me.",
-    "We had a nature retreat at Camp Katarungan. There a forest lay, beside a river that stretched for miles. ",
-    "We hiked, swam, and played. We rode boats across the river and even caught some fish along the way.",
-    "Everything was supposed to be so memorable, so fun … But I couldn’t enjoy it with Dan around.",
-    "(this is a cut all lines above should be already typed out, will code soon)",
+    "(-----------------, will code soon)",
     "For years, he made fun of everything I did",
     "The way I looked, the way I spoke. Fuck, maybe even the way I breathed.",
     "He always found something to laugh at, some way to humiliate me in front of everyone.",
@@ -164,9 +197,13 @@ let lineNumber = 0;
 
 // get elem
 const ghostText = document.getElementById("ghostText");
-const documentArea = document.getElementById("docContainer");
+const documentArea = document.getElementById("editableLines");
 
-
+document.getElementById("contButton").onclick = function() {
+    document.getElementById("contButton").style.display = 'none';
+    showGhostText();
+    addEditableLine();
+}
 
 // new line
 function addEditableLine() {
@@ -174,7 +211,7 @@ function addEditableLine() {
     line.id = "line-" + lineNumber;
     line.setAttribute("contenteditable", "true");
     line.classList.add("editableLine");
-    documentArea.appendChild(line);
+    document.getElementById("docContainer").insertBefore(line, document.getElementById("ghostText"));
     line.focus();
 }
 
@@ -190,10 +227,9 @@ function showGhostText() {
     ghostText.textContent = storyLines[lineNumber];
 }
 
-
-
 // start game
 document.addEventListener("DOMContentLoaded", function () {
+    charChecker();
     showGhostText();
     addEditableLine();
 
@@ -227,7 +263,7 @@ let obstacles = [];
 let gameRunning = true;
 let animationFrame;
 let seconds = 0;
-let maxSeconds = Math.floor(10 + Math.random() * 5); // 15-20 seconds
+let maxSeconds = Math.floor(1 + Math.random() * 1); // 10 DAPAT ITO AKFSFB
 let lastObstacleTime = performance.now();
 let finalPhase = false;
 let gameStarted = false;
@@ -252,7 +288,7 @@ function startBoatGame() {
     setBoatPosition();
     lastObstacleTime = performance.now();
     seconds = 0;
-    maxSeconds = Math.floor(10 + Math.random() * 5);
+    maxSeconds = Math.floor(1 + Math.random() * 1); // 10 SECONDS DAPAT TOH
     animationFrame = requestAnimationFrame(gameLoop);
     gameTimer = setTimeout(() => {
         pendingFinalPhase = true;
@@ -323,7 +359,7 @@ function resetBoatGame() {
     obstacles = [];
     currentLane = 1;
     seconds = 0;
-    maxSeconds = Math.floor(10 + Math.random() * 5);
+    maxSeconds = Math.floor(1 + Math.random() * 1); // 10 SECONDS DAPAT TOH
 
     const obsElems = document.querySelectorAll('.obstacle');
     obsElems.forEach(elem => elem.remove());

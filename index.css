@@ -222,9 +222,17 @@ button{
 
 /* Ghost text */
 #ghostText {
-    color: var(--text-muted);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #aaa;
     font-style: italic;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
     padding: 5px;
+    width: 100%;
+    white-space: pre-wrap;
 }
 
 /* Editable line */
