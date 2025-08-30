@@ -220,34 +220,69 @@ button{
     gap: 10px;
 }
 
+.typing-container {
+    position: relative;
+    width: 100%;
+}
+
 /* Ghost text */
-#ghostText {
+.ghostText {
     position: absolute;
     top: 0;
     left: 0;
-    color: #aaa;
-    font-style: italic;
+    color: var(--text-muted);
     pointer-events: none;
     user-select: none;
-    z-index: 1;
-    padding: 5px;
-    width: 100%;
     white-space: pre-wrap;
+    width: 100%;
+    z-index: 1;
 }
 
 /* Editable line */
 .editableLine {
+    position: relative;
+    background: transparent;
+    color: var(--border-dark);
+    z-index: 2;
+    width: 100%;
     border-bottom: 1px solid var(--text-muted);
-    padding: 5px;
     outline: none;
     caret-color: #f00;
 }
 
 .lockedLine {
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border-dark);
+    color: #000;
     pointer-events: none;
 }
+
+.hidden{
+    display: none;
+}
+
+.finalMessage {
+    margin-top: 20px;
+    font-style: italic;
+    color: #555;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.finalMessage.visible {
+    opacity: 1;
+}
+
+.errorLine {
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
 
 #webSearchBar {
     padding: 10px;

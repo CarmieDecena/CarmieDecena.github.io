@@ -160,8 +160,17 @@
             <p id="typedStory"></p>
             <button id="contButton">Continue Writing?</button>
             <div id="editableLines"></div>
-            <div id="ghostText"></div>
         </main>
+    </div>
+
+    <div id="charErrorPopup" class="popup">
+        <div class="popupContent">
+
+            <div class="popupHeader">Character Error</div>
+            <div class="closeButton" onclick="closeCharErrorPopup()">&times;</div>
+            <div id="charErrorMsg"></div>
+
+        </div>
     </div>
 
     <!--Fullscreen | Search Engine-->
@@ -182,5 +191,7 @@
     </div>
 
     <script src="./index.js"></script>
+    <script src="./boatGame.js"></script>
+    <script src="./untitledDocu.js"></script>
 </body>
 </html>
