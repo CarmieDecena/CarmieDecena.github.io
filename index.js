@@ -19,7 +19,7 @@ const folder = [
 function openTrashBin(app) {
     document.getElementById('trashPopup').style.display = 'block';
     const randomIndex = Math.floor(Math.random() * app.length);
-    document.getElementById("desktopPrompt").innerHTML = `<p>${app[randomIndex]}</p>`;
+    document.getElementById("trashPrompt").innerHTML = `<p>${app[randomIndex]}</p>`;
 }
 
 function closeTrashBin() {
@@ -77,6 +77,12 @@ function closeBoatGame() {
     document.getElementById('browserBoatGame').style.display = 'none';
 }
 
+function openSystemErrorPopup() {
+    document.getElementById('systemErrorPopup').style.display = 'block';
+    const randomIndex = Math.floor(Math.random() * systemError.length);
+    document.getElementById("systemErrorPrompt").innerHTML = `<p>${systemError[randomIndex]}</p>`;
+}
+
 function closeSystemErrorPopup() {
     document.getElementById('systemErrorPopup').style.display = 'none';
     document.getElementById('browserBoatGame').style.display = 'none';
@@ -88,24 +94,39 @@ function closeSignInPage(){
     signedIn = true;
 }
 
-function openCharErrorPopup() {
-    const popup = document.getElementById("charErrorPopup");
-    const msg = document.getElementById("charErrorMsg");
-
-    popup.style.display = "block";
-    msg.textContent = "Incorrect text. Please try again.";
+function openSearchPopup() {
+    document.getElementById('searchPopup').style.display = 'block';
 }
 
-function closeCharErrorPopup() {
-    const popup = document.getElementById("charErrorPopup");
-    popup.style.display = "none";
+function closeSearchPopup() {
+    document.getElementById('searchPopup').style.display = 'none';
 }
+
+function openCrptdGame() {
+    const query = document.getElementById('searchInput').value.trim();
+
+    if (query !== '') {
+        document.getElementById('searchEngine').style.display = 'none';
+        document.getElementById('crptdBoatGame').style.display = 'block';
+        document.getElementById('browserBoatGame').style.display = 'none';
+        document.getElementById('searchPopup').style.display = 'block';
+    }
+}
+
+function closeCrptdGame() {
+    document.getElementById('crptdBoatGame').style.display = 'none';
+}   
 
 // search button functionality
 document.getElementById('searchButton').onclick = function() {
-    const query = document.getElementById('searchInput').value;
-    alert('You searched for: '+ query);
+    const query = document.getElementById('searchInput').value.trim();
+
+    if (query !== '') {
+        openSearchPopup();
+        openCrptdGame();
+    }
 };
+
 
 document.getElementById('searchInput').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {

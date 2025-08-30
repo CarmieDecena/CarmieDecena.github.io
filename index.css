@@ -4,7 +4,7 @@
     --bg-desktop-hover: #289999;
     --bg-header: #2809bc;
     --bg-ribbon: #e0e0e0;
-    --bg-hover: #d4d4d4;
+    --bg-hover: #b9b9b9;
     --text-muted: #888;
     --bg-text-light: #fff;
     --border-dark: #222;
@@ -15,7 +15,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'W95FA', monospace; 
-    font-size: 14px;
     caret-color: transparent;
     image-rendering: pixelated;
 }
@@ -84,7 +83,7 @@ button{
 .popup{
     display: none;
     position: fixed;
-    z-index: 11000;
+    z-index: 20000;
     left: 0; 
     top: 0;
     width: 100%; 
@@ -93,10 +92,30 @@ button{
     padding: 10px 0 10px 0;
 }
 
+.prompt{
+    font-size: 35.84px;
+    margin: 50px 10px 50px 250px;
+}
+
+#systemErrorPrompt{
+    color: #f00;
+    animation: glitch 0.8s ease-in-out 1;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 0 red; }
+    20% { text-shadow: -2px 0 blue; }
+    40% { text-shadow: 2px 0 green; }
+    60% { text-shadow: -2px 0 yellow; }
+    80% { text-shadow: 2px 0 purple; }
+    100% { text-shadow: -2px 0 orange; }
+}
+
+
 .popupContent,
 .libraryContent{
     margin: 10% auto;
-    padding: 20px;
+    padding: 21px;
     width: 630px;
     height: 370px;
     position: relative;
@@ -124,7 +143,7 @@ button{
 .popupHeader{
     width: 100%;
     height: 30px;
-    margin: 0 0 20px 20px;
+    margin: 0 0 20px 15px;
     color: var(--bg-text-light);
     font-size: 22.4px;
 }
@@ -225,12 +244,12 @@ button{
     width: 100%;
 }
 
-/* Ghost text */
-.ghostText {
+/* guide text */
+.guideText {
     position: absolute;
     top: 0;
     left: 0;
-    color: var(--text-muted);
+    color: #048dcc;
     pointer-events: none;
     user-select: none;
     white-space: pre-wrap;
@@ -272,6 +291,7 @@ button{
 }
 
 .errorLine {
+    color: #f00;
     animation: shake 0.3s;
 }
 
@@ -303,13 +323,18 @@ button{
 
 #searchLogo img{
     display: block;
-    margin: 50px auto 0;
+    margin: 150px auto 0 auto;
     width: 500px;
     height: auto;
     border: 4px solid var(--border-dark);
 }
 
 /* BOAT GAME */
+b{
+    font-weight: bold;
+    font-size: larger;
+}
+
 #browserBoatGame {
     position: fixed;
     top: 0; 
@@ -324,8 +349,11 @@ button{
     position: relative;
     max-width: 1000px;
     height: 400px;
-    margin: 40px auto;
-    background: #b3e0ff;
+    margin: 150px auto 0 auto;
+    background-image: url("./icons/boat game bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border: 4px solid #222;
     overflow: hidden;
 }
@@ -346,7 +374,6 @@ button{
     left: 40px;
     width: 200px;
     height: auto;
-    image-rendering: pixelated;
     z-index: 2;
 }
 #boat img {
@@ -358,7 +385,6 @@ button{
     position: absolute;
     width: 100px;
     height: 100px;
-    image-rendering: pixelated;
     left: 600px;
     z-index: 1;
 }
@@ -396,12 +422,32 @@ button{
     position: fixed;
     top: 0; 
     left: 0;
-    width: 100vw; 
-    height: 100vh;
-    background: var(--bg-text-light);
+    width: 100%; 
+    height: 100%;
+    background-image: url("./icons/title screen.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     z-index: 13000;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+#crptdBoatGame {
+    z-index: 15000;
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg-text-light);
+}
+
+#crptdBoatGame #gameArea{
+    pointer-events: none;
+    filter: grayscale(100%) contrast(150%);
 }

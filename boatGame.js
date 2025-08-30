@@ -1,6 +1,6 @@
 // BOAT GAME
 // --- CONFIG ---
-const lanes = [60, 170, 280]; // y positions for up, middle, down
+const lanes = [40, 150, 260]; // y positions for up, middle, down
 let currentLane = 1; // start in the middle
 let obstacles = [];
 let gameRunning = true;
@@ -140,9 +140,7 @@ function gameLoop(now) {
 
                 // Show the error popup automatically after a short delay for effect
                 setTimeout(function() {
-                    gameOverMsg.style.display = 'none';
-                    document.getElementById('systemErrorMsg').innerHTML = "System error! <br>Type: Server-side error. <br>Cause: Brakes not found.";
-                    document.getElementById('systemErrorPopup').style.display = 'block';
+                    openSystemErrorPopup();
                 }, 1200);
             } else {
                 gameRunning = false;
@@ -176,7 +174,13 @@ function endGame(message) {
 
 // --- START GAME ---
 document.addEventListener('keydown', function(e) {
-    if (!signedIn) return; // Block all game controls until signed in
+    const crptdVisible = document.getElementById('crptdBoatGame').style.display === 'block';
+    if (crptdVisible) {
+        e.preventDefault(); // Block arrow key interaction
+        return; // Skip all game logic
+    }
+
+    if (!signedIn) return;
 
     if (!gameStarted && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
         startBoatGame();

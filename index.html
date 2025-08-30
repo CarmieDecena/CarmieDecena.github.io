@@ -8,7 +8,6 @@
 
 <body>
     <div id="signInPage">
-        <h2>WELCOME USER!</h2>
         <button onclick="closeSignInPage()">Sign In</button>
     </div>
 
@@ -24,7 +23,7 @@
                 Press <b>Up</b> or <b>Down</b> arrow key to start!
             </div>
         
-            <div id="boat"><img id="boatImg" src="./icons/boatF1.png"></div>
+            <div id="boat"><img id="boatImg" src="./icons/dan on boat.png"></div>
             <div id="gameOverMsg">
                 <span id="gameOverText"></span>
                 <button id="restartButton">Restart</button>
@@ -34,6 +33,16 @@
             Use <b>Up</b> and <b>Down</b> arrow keys to move the boat.<br>
             Avoid the obstacles!
         </div>
+    </div>
+
+    <div id="crptdBoatGame">
+        <header class="webHeader"><span>Search Engine - Home</span>
+            <div class="closeButton" onclick="closeCrptdGame()">&times;</div></header>
+        <div id="gameArea">
+            <div id="boatGamePrompt">Press <b>Up</b> or <b>Down</b> arrow key to start!</div>
+            <div id="boat"><img id="boatImg" src="./icons/dan on boat.png"></div>
+        </div>
+        <div id="instructions">Use <b>Up</b> and <b>Down</b> arrow keys to move the boat.<br>Avoid the obstacles!</div>
     </div>
 
     <!--Desktop View-->
@@ -76,7 +85,7 @@
 
             <div class="icons libraryIcons"> <!--Library Icon 1-->
                 <button onclick="openRetreatPictures()">
-                    <img src="./icons/folder.png" alt="Folder">
+                    <img src="./icons/folder updated.png" alt="Folder">
                     <p class="iconNames"> Retreat Pictures </p>
                 </button>
             </div>
@@ -104,8 +113,8 @@
 
             <div class="popupHeader">System Error</div>
             <div class="closeButton" onclick="closeSystemErrorPopup()">&times;</div>
-            <div id="systemErrorMsg"></div>
-
+            <div id="systemErrorPrompt" class="prompt">System error! <br>Type: Server-side error. <br>Cause: Brakes not found.</div>
+        
         </div>
     </div>
 
@@ -115,7 +124,7 @@
             
             <div class="popupHeader">Error: No access</div>
             <div class="closeButton" onclick="closeTrashBin()">&times;</div>
-            <div id="desktopPrompt"></div>
+            <div id="trashPrompt" class="prompt"></div>
 
         </div>
     </div>
@@ -126,7 +135,7 @@
 
             <div class="popupHeader">Error: No access</div>
             <div class="closeButton" onclick="closeLibPopup()">&times;</div>
-            <div id="libraryPrompt"></div>
+            <div id="libraryPrompt" class="prompt"></div>
 
         </div>
     </div>
@@ -156,21 +165,16 @@
             <div id="ribbonIconsContainer"></div>
         </nav>
 
+        <div id="strikeCounter"> <!--Strike Counter-->
+            
+
+        </div>
+
         <main id="docContainer">  <!--Document-->
             <p id="typedStory"></p>
             <button id="contButton">Continue Writing?</button>
             <div id="editableLines"></div>
         </main>
-    </div>
-
-    <div id="charErrorPopup" class="popup">
-        <div class="popupContent">
-
-            <div class="popupHeader">Character Error</div>
-            <div class="closeButton" onclick="closeCharErrorPopup()">&times;</div>
-            <div id="charErrorMsg"></div>
-
-        </div>
     </div>
 
     <!--Fullscreen | Search Engine-->
@@ -187,6 +191,21 @@
 
         <div id="searchLogo"> <!--Search Logo-->
             <img src="./icons/gugol parody.png" alt="Search Logo">
+        </div>
+    </div>
+
+        <!--PopUp | Search Engine-->
+    <div id="searchPopup" class="popup">
+        <div class="popupContent">
+
+            <div class="popupHeader">Error: Search Not Found</div>
+            <div class="closeButton" onclick="closeSearchPopup()">&times;</div>
+            <div id="searchPrompt" class="prompt">
+                Request index corrupted.<br>
+                0 results found.<br>
+                Please try again later.
+            </div>
+            
         </div>
     </div>
 

@@ -68,16 +68,16 @@ function addEditableLine() {
     const wrapper = document.createElement("div");
     wrapper.className = "typing-container";
 
-    const ghost = document.createElement("div");
-    ghost.className = "ghostText";
-    ghost.textContent = storyLines[lineNumber];
+    const guide = document.createElement("div");
+    guide.className = "guideText";
+    guide.textContent = storyLines[lineNumber];
 
     const line = document.createElement("div");
     line.id = "line-" + lineNumber;
     line.setAttribute("contenteditable", "true");
     line.className = "editableLine";
 
-    wrapper.appendChild(ghost);
+    wrapper.appendChild(guide);
     wrapper.appendChild(line);
     document.getElementById("editableLines").appendChild(wrapper);
 
@@ -92,12 +92,12 @@ function addEditableLine() {
 
             if (typedText === expectedText) {
                 lockLine(line);
-                ghost.classList.add("hidden");
+                guide.classList.add("hidden");
                 lineNumber++;
 
             if (lineNumber < storyLines.length) {
                 addEditableLine();
-                
+
             } else {
                 const finalDiv = document.getElementById("finalMessage");
                 setTimeout(() => {
@@ -119,15 +119,17 @@ function addEditableLine() {
         }
     });
 
-    // Optionally, show ghost text again if line is empty on blur
+    // Optionally, show guide text again if line is empty on blur
     line.addEventListener('blur', function() {
         if (line.textContent.trim().length > 0){
-            ghost.classList.add("hidden");
+            guide.classList.add("hidden");
         } else {
-            ghost.classList.remove("hidden");
+            guide.classList.remove("hidden");
         }
     });
 }
+
+
 
 // make a line READ-ONLY LOCKS THE LINE
 function lockLine(line) {
@@ -139,4 +141,4 @@ function lockLine(line) {
 setTimeout(() => {
     finalDiv.textContent = "I hope they don't find out.";
     finalDiv.classList.add("visible");
-}, 1000); // 1 second delay
+});
